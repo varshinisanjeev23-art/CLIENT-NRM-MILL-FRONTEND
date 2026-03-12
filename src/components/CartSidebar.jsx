@@ -7,18 +7,18 @@ const COLORS = ['#ff4757', '#ffa502', '#2ed573', '#1e90ff', '#ff6b81', '#fbbf24'
 function randomBetween(min, max) { return Math.random() * (max - min) + min; }
 
 export default function CartSidebar() {
-    const { 
-        cart, 
-        isCartOpen, 
-        closeCart, 
-        removeFromCart, 
-        updateQuantity, 
+    const {
+        cart,
+        isCartOpen,
+        closeCart,
+        removeFromCart,
+        updateQuantity,
         updateWeight,
         addToCart,
-        cartTotal 
+        cartTotal
     } = useContext(CartContext);
     const navigate = useNavigate();
-    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com';
     const [confetti, setConfetti] = useState([]);
 
     const [recommendations, setRecommendations] = useState([]);
@@ -104,7 +104,7 @@ export default function CartSidebar() {
                     z-index: 101;
                 }
             `}</style>
-            
+
             {/* Confetti Overlay */}
             {confetti.map(p => (
                 <div key={p.id} className="confetti-p" style={{
@@ -118,7 +118,7 @@ export default function CartSidebar() {
                 }} />
             ))}
             {/* Overlay */}
-            <div 
+            <div
                 className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in"
                 onClick={closeCart}
             />
@@ -128,7 +128,7 @@ export default function CartSidebar() {
                 {/* Header */}
                 <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
                     <h2 className="text-xl font-black text-gray-900 tracking-tight">SHOPPING CART</h2>
-                    <button 
+                    <button
                         onClick={closeCart}
                         className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
                     >
@@ -153,7 +153,7 @@ export default function CartSidebar() {
                             </div>
                         )}
                         <div className="relative h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                            <div 
+                            <div
                                 className="h-full bg-green-500 transition-all duration-500"
                                 style={{ width: `${Math.min((cartTotal / 699) * 100, 100)}%` }}
                             />
@@ -168,7 +168,7 @@ export default function CartSidebar() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
                             <p className="font-bold text-sm tracking-widest uppercase">Your cart is empty</p>
-                            <button 
+                            <button
                                 onClick={closeCart}
                                 className="mt-6 text-green-600 font-black italic hover:underline"
                             >
@@ -181,9 +181,9 @@ export default function CartSidebar() {
                                 <div key={`${item._id}-${item.weight}`} className="flex gap-4">
                                     {/* Item Image */}
                                     <div className="w-24 h-24 bg-gray-50 rounded-xl overflow-hidden border border-gray-100 shrink-0">
-                                        <img 
-                                            src={`${API_BASE}${item.images && item.images.length > 0 ? item.images[0] : item.imageUrl}`} 
-                                            alt={item.name} 
+                                        <img
+                                            src={`${API_BASE}${item.images && item.images.length > 0 ? item.images[0] : item.imageUrl}`}
+                                            alt={item.name}
                                             className="w-full h-full object-contain"
                                         />
                                     </div>
@@ -193,27 +193,26 @@ export default function CartSidebar() {
                                         <h3 className="text-sm font-bold text-gray-900 mb-1 leading-tight line-clamp-2">
                                             {item.name}
                                         </h3>
-                                        
+
                                         {/* Dynamic Weight/Pack Selection for Available Quantities */}
                                         <div className="flex flex-wrap gap-1.5 mb-3">
                                             {(item.quantityOptions && item.quantityOptions.length > 0 ? item.quantityOptions : [1, 5, 10, 25])
-                                              .filter(opt => {
-                                                  if (opt === 1 && orderCount > 0) return false;
-                                                  return true;
-                                              })
-                                              .map(opt => (
-                                                <button 
-                                                    key={opt}
-                                                    onClick={() => updateWeight(item._id, item.weight, opt)}
-                                                    className={`px-2 py-1 rounded-md border font-bold text-[9px] uppercase tracking-tighter transition-all ${
-                                                        item.weight === opt 
-                                                        ? 'border-[#3ba829] bg-green-50 text-[#3ba829]' 
-                                                        : 'border-gray-200 text-gray-400 hover:border-gray-300'
-                                                    }`}
-                                                >
-                                                    {opt}kg
-                                                </button>
-                                            ))}
+                                                .filter(opt => {
+                                                    if (opt === 1 && orderCount > 0) return false;
+                                                    return true;
+                                                })
+                                                .map(opt => (
+                                                    <button
+                                                        key={opt}
+                                                        onClick={() => updateWeight(item._id, item.weight, opt)}
+                                                        className={`px-2 py-1 rounded-md border font-bold text-[9px] uppercase tracking-tighter transition-all ${item.weight === opt
+                                                                ? 'border-[#3ba829] bg-green-50 text-[#3ba829]'
+                                                                : 'border-gray-200 text-gray-400 hover:border-gray-300'
+                                                            }`}
+                                                    >
+                                                        {opt}kg
+                                                    </button>
+                                                ))}
                                         </div>
                                         <div className="text-sm font-black text-[#3ba829] mb-4">
                                             Rs. {(item.ratePerKg * item.weight).toFixed(2)}
@@ -222,7 +221,7 @@ export default function CartSidebar() {
                                         <div className="flex items-center gap-4">
                                             {/* Quantity Selector */}
                                             <div className="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden h-9">
-                                                <button 
+                                                <button
                                                     onClick={() => updateQuantity(item._id, item.weight, Math.max(1, item.quantity - 1))}
                                                     className="w-8 h-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors font-bold"
                                                 >
@@ -231,46 +230,45 @@ export default function CartSidebar() {
                                                 <div className="w-8 text-center text-xs font-black text-gray-900 border-x border-gray-200">
                                                     {item.quantity}
                                                 </div>
-                                                <button 
+                                                <button
                                                     onClick={() => {
                                                         if (item.weight === 1) return;
                                                         updateQuantity(item._id, item.weight, item.quantity + 1);
                                                     }}
                                                     disabled={item.weight === 1}
-                                                    className={`w-8 h-full flex items-center justify-center font-bold transition-colors ${
-                                                        item.weight === 1 
-                                                        ? 'bg-gray-100 text-gray-300 cursor-not-allowed' 
-                                                        : 'text-gray-500 hover:bg-gray-100'
-                                                    }`}
+                                                    className={`w-8 h-full flex items-center justify-center font-bold transition-colors ${item.weight === 1
+                                                            ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                                                            : 'text-gray-500 hover:bg-gray-100'
+                                                        }`}
                                                 >
                                                     +
                                                 </button>
                                             </div>
 
                                             {/* Circular Buttons - Screenshot specific */}
-                                                <button 
-                                                    onClick={() => removeFromCart(item._id, item.weight)}
-                                                    className="w-9 h-9 rounded-full bg-red-50 border border-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-all shadow-sm ml-2"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
+                                            <button
+                                                onClick={() => removeFromCart(item._id, item.weight)}
+                                                className="w-9 h-9 rounded-full bg-red-50 border border-red-50 flex items-center justify-center text-red-500 hover:bg-red-100 transition-all shadow-sm ml-2"
+                                            >
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             ))}
 
-                              {/* You May Also Like Section - Real Products */}
-                             {recommendations.length > 0 && (
+                            {/* You May Also Like Section - Real Products */}
+                            {recommendations.length > 0 && (
                                 <div className="pt-8 border-t border-gray-100">
                                     <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] text-center mb-8">You may also like</h4>
                                     <div className="space-y-4">
                                         {recommendations.map(p => (
                                             <div key={p._id} className="bg-gray-50 p-4 rounded-2xl flex items-center gap-4 hover:bg-green-50 transition-colors group">
                                                 <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center border border-gray-100 group-hover:border-green-200 overflow-hidden shrink-0">
-                                                    <img 
-                                                        src={`${API_BASE}${p.images?.[0] || p.imageUrl}`} 
+                                                    <img
+                                                        src={`${API_BASE}${p.images?.[0] || p.imageUrl}`}
                                                         className="w-full h-full object-contain p-1"
                                                         alt={p.name}
                                                     />
@@ -279,7 +277,7 @@ export default function CartSidebar() {
                                                     <div className="text-xs font-bold text-gray-900 mb-1 leading-tight line-clamp-1">{p.name}</div>
                                                     <div className="text-[10px] font-black text-[#3ba829]">Rs. {p.ratePerKg.toFixed(2)} / kg</div>
                                                 </div>
-                                                <button 
+                                                <button
                                                     onClick={() => handleAddRecommendation(p)}
                                                     className="w-9 h-9 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 group-hover:bg-[#3ba829] group-hover:text-white group-hover:border-[#3ba829] transition-all shadow-sm"
                                                 >
@@ -291,7 +289,7 @@ export default function CartSidebar() {
                                         ))}
                                     </div>
                                 </div>
-                             )}
+                            )}
                         </div>
                     )}
                 </div>
@@ -309,14 +307,14 @@ export default function CartSidebar() {
                     </p>
 
                     <div className="space-y-3 font-black text-xs uppercase tracking-widest">
-                        <button 
+                        <button
                             onClick={handleViewCart}
                             className="w-full bg-[#1c1c1c] text-white py-4 rounded-lg hover:bg-black transition-all flex items-center justify-center gap-2 group border border-black"
                         >
-                            VIEW CART 
+                            VIEW CART
                             <span className="group-hover:translate-x-1 transition-transform">→</span>
                         </button>
-                        <button 
+                        <button
                             onClick={handleCheckout}
                             className="w-full bg-[#3ba829] text-white py-4 rounded-lg hover:bg-[#318b22] transition-all flex items-center justify-center gap-2 border border-[#3ba829]"
                         >
