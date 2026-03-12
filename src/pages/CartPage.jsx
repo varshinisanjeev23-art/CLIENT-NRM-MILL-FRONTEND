@@ -93,7 +93,7 @@ export default function CartPage() {
                                         <div className="flex gap-8">
                                             <div className="w-40 h-40 bg-gray-50 rounded-xl overflow-hidden border border-gray-100 shrink-0">
                                                 <img 
-                                                    src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${item.images && item.images.length > 0 ? item.images[0] : item.imageUrl}`} 
+                                                    src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${item.images && item.images.length > 0 ? item.images[0] : item.imageUrl}`} 
                                                     className="w-full h-full object-contain" 
                                                     alt={item.name} 
                                                 />
