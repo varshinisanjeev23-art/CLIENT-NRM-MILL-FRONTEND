@@ -69,7 +69,7 @@ export default function HomePage() {
                     <div key={p._id} className="w-40 h-52 bg-white rounded-xl shadow-2xl p-2 transform transition-all duration-300 relative group"
                       style={{ zIndex: 10 + i, marginTop: i % 2 === 0 ? '0' : '30px' }}
                     >
-                      <img src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${p.imageUrl}`} className="w-full h-full object-cover rounded-lg" alt={p.name} />
+                      <img src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${p.imageUrl}`} className="w-full h-full object-cover rounded-lg" alt={p.name} />
                     </div>
                   ))}
                </div>
