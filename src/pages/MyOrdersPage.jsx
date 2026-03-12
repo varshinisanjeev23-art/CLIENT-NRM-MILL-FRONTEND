@@ -388,7 +388,7 @@ export default function MyOrdersPage() {
                               // Avoid double-URL issue
                               const src = img.startsWith('http')
                                 ? img
-                                : `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${img}`;
+                                : `${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${img}`;
 
                               return (
                                 <img
