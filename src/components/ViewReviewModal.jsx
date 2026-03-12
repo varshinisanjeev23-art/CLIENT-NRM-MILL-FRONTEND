@@ -55,7 +55,7 @@ export default function ViewReviewModal({ order, isOpen, onClose }) {
               <div className="flex items-center gap-5 p-5 border border-gray-100 rounded-2xl bg-gray-50 items-start">
                   <div className="w-16 h-16 bg-white rounded-xl shadow-sm flex items-center justify-center overflow-hidden shrink-0">
                       <img 
-                        src={order.productImage ? `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${order.productImage}` : 'https://placehold.co/100x100?text=Rice'} 
+                        src={order.productImage ? `${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${order.productImage}` : 'https://placehold.co/100x100?text=Rice'} 
                         className="w-full h-full object-contain" 
                         alt={order.riceType} 
                       />
@@ -94,7 +94,7 @@ export default function ViewReviewModal({ order, isOpen, onClose }) {
                     <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3 text-left">Shared Photos</h3>
                     <div className="flex gap-3 overflow-x-auto pb-2">
                         {review.images.map((img, i) => (
-                           <img key={i} src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${img}`} className="w-20 h-20 rounded-xl object-cover border border-gray-100 shadow-sm" alt="Review" />
+                           <img key={i} src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${img}`} className="w-20 h-20 rounded-xl object-cover border border-gray-100 shadow-sm" alt="Review" />
                         ))}
                     </div>
                  </div>
