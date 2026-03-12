@@ -14,14 +14,14 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
+  const apiUrl = (import.meta.env.VITE_API_URL || 'https://rice-mill-backend.onrender.com/api');
   const apiOrigin = (() => {
     try {
       const u = new URL(apiUrl);
       // if ends with /api, strip it to get origin/base
       return `${u.protocol}//${u.host}`;
     } catch {
-      return 'http://localhost:5000';
+      return 'https://rice-mill-backend.onrender.com';
     }
   })();
 
