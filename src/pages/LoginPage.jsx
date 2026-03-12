@@ -4,21 +4,19 @@ import { AuthContext } from '../context/AuthContext';
 import { GoogleLogin } from '@react-oauth/google';
 
 
-export default function LoginPage() {
-  const { login, googleLogin } = useContext(AuthContext);
+export default function RegisterPage() {
+  const { register, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const redirect = params.get('redirect') || '/';
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ name: '', email: '', password: '', company: '' });
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const apiUrl = (import.meta.env.VITE_API_URL || 'https://rice-mill-backend.onrender.com/api');
   const apiOrigin = (() => {
     try {
       const u = new URL(apiUrl);
-      // if ends with /api, strip it to get origin/base
       return `${u.protocol}//${u.host}`;
     } catch {
       return 'https://rice-mill-backend.onrender.com';
@@ -28,10 +26,10 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      await register(form);
       navigate(redirect);
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || 'Registration failed');
     }
   };
 
@@ -40,35 +38,55 @@ export default function LoginPage() {
       await googleLogin(credentialResponse.credential);
       navigate(redirect);
     } catch (err) {
-      setError(err.response?.data?.message || 'Google login failed');
+      setError(err.response?.data?.message || 'Google signup failed');
     }
   };
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50 flex items-center justify-center px-4 py-12 relative overflow-hidden">
       {/* Decorative Blobs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-200 rounded-full blur-3xl -ml-24 -mt-24 opacity-50"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full blur-3xl -mr-24 -mb-24 opacity-50"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-green-100 rounded-full blur-3xl -ml-24 -mt-24 opacity-50"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-100 rounded-full blur-3xl -mr-24 -mb-24 opacity-50"></div>
 
-      <div className="max-w-md w-full relative z-10">
+      <div className="max-w-lg w-full relative z-10">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">
-          <div className="inline-block p-4 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl shadow-2xl mb-4">
+          <div className="inline-block p-4 bg-gradient-to-br from-green-600 to-teal-600 rounded-3xl shadow-2xl mb-4">
             <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h1 className="text-4xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to continue to NRM Rice Milling</p>
+          <h1 className="text-4xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-600">Create Account</h1>
+          <p className="text-gray-600">Join NRM Rice Milling today</p>
         </div>
 
         {/* Form Card */}
         <div className="bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-white/20">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Name Field */}
+            <div>
+              <label className="block text-sm font-bold mb-3 text-gray-700">Full Name</label>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  required
+                  className="w-full border-2 border-gray-200 pl-12 pr-4 py-3 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all text-gray-800"
+                  placeholder="John Doe"
+                />
+              </div>
+            </div>
+
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-bold mb-3 text-gray-700">Email Address</label>
+              <label className="block text-sm font-bold mb-3 text-gray-700">Email Address</label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,21 +94,38 @@ export default function LoginPage() {
                   </svg>
                 </div>
                 <input
-                  id="email"
-                  name="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                   required
-                  className="w-full border-2 border-gray-200 pl-12 pr-4 py-3 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all text-gray-800"
+                  className="w-full border-2 border-gray-200 pl-12 pr-4 py-3 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all text-gray-800"
                   placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            {/* Company Field */}
+            <div>
+              <label className="block text-sm font-bold mb-3 text-gray-700">Company Name <span className="text-gray-400 font-normal">(Optional)</span></label>
+              <div className="relative">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  className="w-full border-2 border-gray-200 pl-12 pr-4 py-3 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all text-gray-800"
+                  placeholder="Your Company Ltd."
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-bold mb-3 text-gray-700">Password</label>
+              <label className="block text-sm font-bold mb-3 text-gray-700">Password</label>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,13 +133,11 @@ export default function LoginPage() {
                   </svg>
                 </div>
                 <input
-                  id="password"
-                  name="password"
                   type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
                   required
-                  className="w-full border-2 border-gray-200 pl-12 pr-12 py-3 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all text-gray-800"
+                  className="w-full border-2 border-gray-200 pl-12 pr-12 py-3 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all text-gray-800"
                   placeholder="••••••••"
                 />
                 <button
@@ -139,15 +172,10 @@ export default function LoginPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              className="w-full bg-gradient-to-r from-green-600 to-teal-600 text-white py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
-              Sign In
+              Create Account
             </button>
-
-            {/* Forgot Password */}
-            <div className="text-right -mt-2">
-              <Link to="/forgot-password" className="text-indigo-600 text-sm font-semibold hover:underline">Forgot password?</Link>
-            </div>
           </form>
 
           {/* Divider */}
@@ -160,16 +188,16 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Google Sign-in */}
+          {/* Google Sign-up */}
           <div className="flex justify-center">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
-              onError={() => setError('Google Login Failed')}
+              onError={() => setError('Google Signup Failed')}
               useOneTap
               theme="outline"
               shape="pill"
               size="large"
-              text="signin_with"
+              text="signup_with"
               width="400"
             />
           </div>
@@ -181,22 +209,22 @@ export default function LoginPage() {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">New to NRM?</span>
+              <span className="px-4 bg-white text-gray-500">Already a member?</span>
             </div>
           </div>
 
-          {/* Sign Up Link */}
+          {/* Sign In Link */}
           <Link
-            to={`/register?redirect=${encodeURIComponent(redirect)}`}
-            className="block w-full text-center border-2 border-indigo-600 text-indigo-600 py-3 rounded-xl font-bold hover:bg-indigo-50 transition-all duration-300"
+            to={`/login?redirect=${encodeURIComponent(redirect)}`}
+            className="block w-full text-center border-2 border-green-600 text-green-600 py-3 rounded-xl font-bold hover:bg-green-50 transition-all duration-300"
           >
-            Create Account
+            Sign In Instead
           </Link>
         </div>
 
         {/* Footer Links */}
         <div className="mt-6 text-center text-sm text-gray-600">
-          <Link to="/" className="hover:text-indigo-600 transition-colors">Back to Home</Link>
+          <Link to="/" className="hover:text-green-600 transition-colors">Back to Home</Link>
         </div>
       </div>
     </div>
