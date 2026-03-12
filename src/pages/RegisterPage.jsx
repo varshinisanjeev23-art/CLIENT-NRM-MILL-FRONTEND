@@ -13,13 +13,13 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', company: '' });
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api');
+  const apiUrl = (import.meta.env.VITE_API_URL || 'https://rice-mill-backend.onrender.com/api');
   const apiOrigin = (() => {
     try {
       const u = new URL(apiUrl);
       return `${u.protocol}//${u.host}`;
     } catch {
-      return 'http://localhost:5000';
+      return 'https://rice-mill-backend.onrender.com';
     }
   })();
 
