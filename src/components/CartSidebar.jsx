@@ -124,7 +124,7 @@ export default function CartSidebar() {
             />
 
             {/* Sidebar */}
-            <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transition-transform transform translate-x-0 animate-in slide-in-from-right duration-300 pointer-events-auto">
+            <div className="absolute right-0 top-0 h-full w-full sm:max-w-md bg-white shadow-2xl transition-transform transform translate-x-0 animate-in slide-in-from-right duration-300 pointer-events-auto">
                 {/* Header */}
                 <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-10">
                     <h2 className="text-xl font-black text-gray-900 tracking-tight">SHOPPING CART</h2>
@@ -178,7 +178,7 @@ export default function CartSidebar() {
                     ) : (
                         <div className="space-y-8">
                             {cart.map((item) => (
-                                <div key={`${item._id}-${item.weight}`} className="flex gap-4">
+                                <div key={`${item._id}-${item.weight}`} className="flex flex-col sm:flex-row gap-4">
                                     {/* Item Image */}
                                     <div className="w-24 h-24 bg-gray-50 rounded-xl overflow-hidden border border-gray-100 shrink-0">
                                         <img

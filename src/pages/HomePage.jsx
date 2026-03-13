@@ -29,7 +29,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#f8faf8]">
       {/* Hero Slider Section */}
-      <section className="relative overflow-hidden min-h-[420px] flex items-center mb-12">
+      <section className="relative overflow-hidden min-h-[500px] sm:min-h-[420px] flex items-center mb-12">
         
         {/* Slide 1: Premium Rice Banner (Millet Style) */}
         <div className={`absolute inset-0 transition-opacity duration-1000 flex items-center ${currentSlide === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
@@ -44,20 +44,20 @@ export default function HomePage() {
           <div className="container mx-auto px-6 py-12 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="lg:w-1/2 text-center lg:text-left space-y-6">
               <div className="space-y-1">
-                <h1 className="text-4xl md:text-6xl font-black text-[#fbc02d] leading-none tracking-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-[#fbc02d] leading-none tracking-tight">
                   Healthy Premium <br />
                   <span className="text-white">Rice Varieties</span>
                 </h1>
                 <div className="h-1 w-24 bg-white/20 rounded-full mx-auto lg:mx-0"></div>
               </div>
-              <div className="bg-white text-[#3a5a2e] inline-block px-6 py-2 rounded-full font-black text-lg md:text-xl shadow-xl">
-                Nutritious Varieties of Original Rice
+              <div className="bg-white text-[#3a5a2e] inline-block px-6 py-2 rounded-full font-black text-base sm:text-lg md:text-xl shadow-xl max-w-full">
+                Original Nutritious Rice
               </div>
-              <p className="text-white/90 text-lg font-bold tracking-wide">
+              <p className="text-white/90 text-base sm:text-lg font-bold tracking-wide">
                 Tasty | Healthy | Easy to Cook
               </p>
               <div>
-                <Link to="/products" className="inline-block bg-white text-black px-10 py-3 rounded-full font-black text-xl uppercase tracking-tighter hover:scale-105 transition-transform shadow-lg">
+                <Link to="/products" className="inline-block bg-white text-black px-8 sm:px-10 py-3 rounded-full font-black text-lg sm:text-xl uppercase tracking-tighter hover:scale-105 transition-transform shadow-lg">
                   SHOP NOW
                 </Link>
               </div>
@@ -84,20 +84,20 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
           </div>
           
-          <div className="container mx-auto px-6 py-12 relative z-10 text-left">
-            <div className="max-w-3xl space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 backdrop-blur-md rounded-full border border-green-400/30 text-green-300 text-[10px] font-black uppercase tracking-[0.2em]">
+          <div className="container mx-auto px-6 py-12 relative z-10 text-center lg:text-left">
+            <div className="max-w-3xl mx-auto lg:mx-0 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 backdrop-blur-md rounded-full border border-green-400/30 text-green-300 text-[10px] font-black uppercase tracking-[0.2em] mx-auto lg:mx-0">
                 Tradition Meets Technology
               </div>
-              <h2 className="text-4xl md:text-7xl font-black text-white leading-[1.1] tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl md:text-7xl font-black text-white leading-[1.1] tracking-tighter">
                 NRM <span className="text-green-500">Rice Mill</span><br />
                 Excellence
               </h2>
-              <p className="text-lg md:text-xl text-gray-200 max-w-xl font-medium leading-relaxed opacity-90">
+              <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed opacity-90">
                 Premium rice processing with state-of-the-art milling technology. We deliver the purest grains from the heart of local farms to your table.
               </p>
               <div className="pt-4">
-                <Link to="/products" className="inline-block bg-green-600 text-white px-10 py-3 rounded-full font-black text-xl uppercase tracking-tighter hover:bg-green-700 transition-colors shadow-lg">
+                <Link to="/products" className="inline-block bg-green-600 text-white px-8 sm:px-10 py-3 rounded-full font-black text-lg sm:text-xl uppercase tracking-tighter hover:bg-green-700 transition-colors shadow-lg">
                   DISCOVER MORE
                 </Link>
               </div>
@@ -118,19 +118,19 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 -mt-20 relative z-20">
+      <section className="py-16 -mt-10 sm:-mt-20 relative z-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-amber-100">
-              <div className="text-5xl font-extrabold text-amber-600 mb-2">500+</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-amber-100">
+              <div className="text-4xl sm:text-5xl font-extrabold text-amber-600 mb-2">500+</div>
               <div className="text-gray-600 font-medium">Happy Clients</div>
             </div>
-            <div className="bg-white rounded-2xl shadow-xl p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-green-100">
-              <div className="text-5xl font-extrabold text-green-600 mb-2">99%</div>
+            <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-green-100">
+              <div className="text-4xl sm:text-5xl font-extrabold text-green-600 mb-2">99%</div>
               <div className="text-gray-600 font-medium">Success Rate</div>
             </div>
-            <div className="bg-white rounded-2xl shadow-xl p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-orange-100">
-              <div className="text-5xl font-extrabold text-orange-600 mb-2">24/7</div>
+            <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 text-center transform hover:scale-105 transition-transform duration-300 border border-orange-100 sm:col-span-2 lg:col-span-1">
+              <div className="text-4xl sm:text-5xl font-extrabold text-orange-600 mb-2">24/7</div>
               <div className="text-gray-600 font-medium">Support Available</div>
             </div>
           </div>

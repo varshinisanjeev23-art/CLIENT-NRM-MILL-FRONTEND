@@ -64,7 +64,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white/80 backdrop-blur-lg p-10 rounded-3xl shadow-2xl border border-white/20">
+        <div className="bg-white/80 backdrop-blur-lg p-6 sm:p-10 rounded-3xl shadow-2xl border border-white/20">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>

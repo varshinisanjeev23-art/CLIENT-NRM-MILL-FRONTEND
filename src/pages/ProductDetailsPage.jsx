@@ -215,7 +215,7 @@ export default function ProductDetailsPage() {
            {/* 1. Product Image Section */}
            <div className="flex flex-col md:flex-row gap-6">
              {/* Thumbnails - Left Side on Desktop */}
-             <div className="flex md:flex-col gap-4 order-2 md:order-1 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
+             <div className="flex md:flex-col gap-4 order-2 md:order-1 overflow-x-auto md:overflow-visible pb-4 md:pb-0 px-2 md:px-0 scrollbar-hide">
                {(() => {
                  const imgList =
                    product.images && product.images.length > 0
@@ -232,7 +232,7 @@ export default function ProductDetailsPage() {
                      }`}
                    >
                      <img
-                       src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${imgUrl}`}
+                       src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${imgUrl}`}
                        alt={`Thumbnail ${idx + 1}`}
                        className="w-full h-full object-contain p-1"
                      />
@@ -244,7 +244,7 @@ export default function ProductDetailsPage() {
              {/* Main Image */}
              <div className={`relative flex-1 order-1 md:order-2 bg-white rounded-[2rem] overflow-hidden ${inStock ? 'cursor-zoom-in' : ''} group`} onClick={() => inStock && setIsZoomed(true)}>
                 <img
-                  src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${
+                  src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${
                     product.images && product.images.length > 0
                       ? product.images[activeImage] || product.images[0]
                       : product.imageUrl
@@ -642,7 +642,7 @@ export default function ProductDetailsPage() {
           onClick={() => setIsZoomed(false)}
         >
           <img 
-            src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${
+            src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${
               product.images && product.images.length > 0
                 ? product.images[activeImage] || product.images[0]
                 : product.imageUrl
@@ -660,7 +660,7 @@ export default function ProductDetailsPage() {
       <div className={`fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] transform transition-transform duration-500 z-[90] ${showStickyBar ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="container mx-auto px-4 h-20 sm:h-24 flex items-center justify-between gap-4">
           <div className="hidden md:flex items-center gap-4 flex-[1]">
-            <img src={`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${product.imageUrl}`} className="w-12 h-12 object-cover rounded shadow shadow-gray-200" alt="Thumb" />
+            <img src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${product.imageUrl}`} className="w-12 h-12 object-cover rounded shadow shadow-gray-200" alt="Thumb" />
             <div>
               <div className="font-bold text-sm text-gray-900 truncate max-w-[200px] lg:max-w-xs">{product.name}</div>
               <div className="text-[#3ba829] font-black text-sm">Rs. {calculatedPrice} <span className="text-gray-400 font-medium line-through ml-1">{(product.originalPrice * weight).toFixed(2)}</span></div>
