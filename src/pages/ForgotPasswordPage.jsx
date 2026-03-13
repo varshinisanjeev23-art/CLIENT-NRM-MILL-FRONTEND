@@ -12,8 +12,12 @@ export default function ForgotPasswordPage() {
     setLoading(true);
     setStatus({ ok: false, message: '' });
     try {
-      await api.post('/auth/forgot-password', { email });
-      setStatus({ ok: true, message: 'If an account exists, a reset link has been sent.' });
+      const response = await api.post('/auth/forgot-password', { email });
+      setStatus({ 
+        ok: true, 
+        message: response.data.message,
+        debugLink: response.data.debugLink 
+      });
     } catch (err) {
       setStatus({ ok: false, message: err.response?.data?.message || 'Failed to send reset link' });
     } finally {
@@ -41,7 +45,19 @@ export default function ForgotPasswordPage() {
             />
           </div>
           {status.message && (
-            <div className={`${status.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'} border-2 px-4 py-3 rounded-xl text-sm font-semibold`}>{status.message}</div>
+            <div className="space-y-2">
+              <div className={`${status.ok ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700'} border-2 px-4 py-3 rounded-xl text-sm font-semibold`}>
+                {status.message}
+              </div>
+              {status.debugLink && (
+                <div className="bg-amber-50 border-amber-200 border-2 px-4 py-3 rounded-xl text-xs overflow-hidden">
+                  <p className="text-amber-800 font-bold mb-1">Dev Mode - Reset Link:</p>
+                  <a href={status.debugLink} className="text-indigo-600 break-all underline hover:text-indigo-800">
+                    {status.debugLink}
+                  </a>
+                </div>
+              )}
+            </div>
           )}
           <button
             type="submit"
