@@ -154,9 +154,11 @@ export default function ProductsPage() {
                     <div>
                       <span className="block text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1 opacity-60">Starting from</span>
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl font-black text-green-700">₹{p.ratePerKg.toFixed(0)}</span>
+                        <span className="text-2xl font-black text-green-700">
+                          ₹{p.ratePerKg.toFixed(0)} <span className="text-sm text-gray-500 font-bold">/per kg</span>
+                        </span>
                         {p.originalPrice && (
-                          <span className="text-sm text-gray-300 line-through font-bold">₹{p.originalPrice.toFixed(0)}</span>
+                          <span className="text-sm text-gray-300 line-through font-bold mt-1">₹{p.originalPrice.toFixed(0)}</span>
                         )}
                       </div>
                     </div>
