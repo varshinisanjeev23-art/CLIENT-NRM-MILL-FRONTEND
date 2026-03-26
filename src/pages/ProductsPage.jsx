@@ -106,21 +106,11 @@ export default function ProductsPage() {
             {sortedProducts.map((p) => (
               <div key={p._id} className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300">
                 <div className="relative aspect-square overflow-hidden bg-[#fafafa]">
-                  {p.imageUrl ? (
-                    <Link to={`/products/p/${p._id}`}>
-                      <img
-                        src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${p.imageUrl}`}
-                        alt={p.name}
-                        className={`w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ${p.stockStatus === 'Out of Stock' ? 'grayscale opacity-60' : ''}`}
-                      />
-                    </Link>
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                      <svg className="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    </div>
-                  )}
+                  <Link to={`/products/p/${p._id}`} className="block w-full h-full relative z-0">
+                    <ProductImageCarousel product={p} fallbackImage={p.imageUrl} />
+                  </Link>
 
-                  <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 pointer-events-none">
+                  <div className="absolute inset-x-0 bottom-0 p-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 pointer-events-none z-10">
                     {p.stockStatus !== 'Out of Stock' && (
                       <button
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleQuickShop(p); }}
@@ -267,16 +257,11 @@ function QuickViewModal({ product, onClose, addToCart, navigate }) {
           </svg>
         </button>
 
-        {/* Header: Image & Basics */}
         <div className="flex gap-4 items-center mb-6">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 bg-gray-50 overflow-hidden rounded border border-gray-100 relative">
-            <img
-              src={`${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${product.imageUrl}`}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+          <div className="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 bg-gray-50 overflow-hidden rounded border border-gray-100 relative group">
+            <ProductImageCarousel product={product} fallbackImage={product.imageUrl} />
             {product.stockStatus === 'Out of Stock' && (
-              <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
+              <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-20">
                 <span className="text-[10px] font-black text-red-600 bg-red-100 px-2 py-0.5 rounded uppercase">Out of Stock</span>
               </div>
             )}
@@ -370,6 +355,58 @@ function QuickViewModal({ product, onClose, addToCart, navigate }) {
         </div>
 
       </div>
+    </div>
+  );
+}
+
+function ProductImageCarousel({ product, fallbackImage }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  
+  const images = product.images && product.images.length > 0 ? product.images : [fallbackImage].filter(Boolean);
+
+  useEffect(() => {
+    let interval;
+    if (isHovered && images.length > 1) {
+      interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }, 1000); // cycle image every 1 second
+    } else {
+      setCurrentIndex(0); // reset when not hovered
+    }
+    return () => clearInterval(interval);
+  }, [isHovered, images.length]);
+
+  if (images.length === 0) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gray-50">
+        <svg className="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+      </div>
+    );
+  }
+
+  const currentImageUrl = `${import.meta.env.VITE_API_BASE_URL || 'https://rice-mill-backend.onrender.com'}${images[currentIndex]}`;
+
+  return (
+    <div 
+      className="w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
+    >
+      <img
+        src={currentImageUrl}
+        alt={product.name}
+        className={`w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ${product.stockStatus === 'Out of Stock' ? 'grayscale opacity-60' : ''}`}
+      />
+      {images.length > 1 && (
+        <div className="absolute top-3 right-3 flex gap-1 z-10 bg-black/30 px-2 py-1 rounded-full backdrop-blur-sm shadow-sm">
+          {images.map((_, idx) => (
+            <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 shadow-sm ${currentIndex === idx ? 'w-3 bg-white' : 'w-1.5 bg-white/50'}`} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
